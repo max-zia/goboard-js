@@ -1,9 +1,3 @@
-// One set of game params for each board
-var params = new GameParams(); 
-
-// One group table for each board
-var groupTable = new GroupTable();
-
 /** Loop over each board intersection and add listeners/control */
 function initBoardControl() { 
     for (let i = 0; i < board.size; i++) {
@@ -44,7 +38,7 @@ function addControl(co) {
 function addBoardClickHandler(svg, co) {
     svg.addEventListener("click", function() {
 
-        if (params.analysisMode == false) {
+        if (!(analysisMode.isOn)) {
 
             // Get player colours
             var colour = params.getPlayer();
@@ -68,8 +62,42 @@ function addBoardClickHandler(svg, co) {
             // Update mainTree
             params.mainTree.push(co); 
         
+        } else {
+            var colour = params.getPlayer();
+            var oppColour = (colour == "white") ? "black" : "white";
+            console.log(colour, co);
         }
 
     });
 
+}
+
+/**
+ * Add a click event listener to the back button and the left arrow keypress 
+ */
+function addUndoMoveHandler() {
+    
+    // one for clicking on button in GUI
+    var btn = document.getElementById("back-btn");
+    btn.addEventListener("click", function() {
+
+        // Is analysis mode already on?
+        if (analysisMode.isOn == false) {
+            analysisMode.enable(groupTable, params);
+        } else {
+            analysisMode.counter--;
+        }
+
+        // delete from group
+        var co = params.mainTree[analysisMode.counter];
+        groupTable.removefromGroup(co);
+
+        // set empty
+        board.setEmpty(co);
+
+        // refresh view
+        view.refreshPoint(co, board);
+    });
+
+    // one for keypresses (left arrow)
 }

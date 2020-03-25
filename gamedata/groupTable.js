@@ -53,6 +53,18 @@ class GroupTable {
         }
     }
 
+    removefromGroup(co) {
+        console.log(co);
+        var group = this.getGroupOf(co);
+        var coords = this.table[group][0];
+        if (coords.length == 1) {
+            this.deleteEntry(group);
+        } else {
+            var i = coords.indexOf(co);
+            coords.splice(i, 1);
+        }
+    }
+
     /**
      * Return the ID of group that this coordinate is a member of
      */
@@ -60,13 +72,45 @@ class GroupTable {
         var x = this.table;
         var mainKey = "";
 
-        Object.keys(this.table).forEach(function(key) {
+        Object.keys(x).forEach(function(key) {
             if ((countOf(x[key][0], co)) > 0) {
                 mainKey = key;
             }
         });
 
         return mainKey;
+    }
+
+    /**
+     * Return a copy of the class instance.
+     */
+    copy() {
+        var copied = Object.assign(
+            Object.create(
+                Object.getPrototypeOf(this)
+            ), 
+            this
+        );
+    
+        // Add a copy of the instance variables
+        copied.table = this.copyTable(copied.table);
+    
+        return copied;
+    }
+
+    /**
+     * Return a copy of field variable table.
+     */
+    copyTable() {
+        var x = this.table;
+        var copied = {};
+        Object.keys(x).forEach(function(key) {
+            copied[key] = [];
+            copied[key][0] = x[key][0].slice(0);
+            copied[key][1] = x[key][1];
+            copied[key][2] = x[key][2];
+        });
+        return copied;
     }
     
 }

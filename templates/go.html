@@ -2,9 +2,26 @@
 </head>
 
 <body>
+  
+  <!-- Button panel, score etc. -->
+  <div>
+    <!-- Undo button -->
+    <button id="back-btn">Go back move</button>
 
-  <!-- SVG Go Board -->
-  <svg id="board" width="600" height="600"></svg>
+    <!-- Analysis mode on?
+    <span id="analysis-indicator" style="display: none">analysis on</span>
+    <script>
+      if (params.analysisMode == true) {
+        var i = document.getElementById("analysis-indicator");
+        i.style.display = "inline";
+      }
+    </script> -->
+  </div>
+
+  <div>
+    <!-- SVG Go Board -->
+    <svg id="board" width="600" height="600"></svg>
+  </div>
 
   <!-- JS -->
   <!-- Helpers -->
@@ -21,6 +38,8 @@
   <!-- Game Data & Controls -->
   <script src="../gamedata/gameParams.js"></script>
   <script src="../gamedata/groupTable.js"></script>
+  <script src="../gamedata/analysisMode.js"></script>
+  
   <script src="../controls/groupDetection.js"></script>
   <script src="../controls/stoneDetection.js"></script>
   <script src="../controls/boardcontrol.js"></script>

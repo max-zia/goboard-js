@@ -7,7 +7,6 @@ class GameParams {
 
     constructor() {
         this.mainTree = [];
-        this.analysisMode = false;
     }
 
     getPlayer() {
@@ -15,4 +14,3 @@ class GameParams {
     }
 
 }
-

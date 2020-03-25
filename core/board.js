@@ -60,6 +60,23 @@ class Board {
         return boardstatesInv[this.state[getIndex(co)]];
     }
 
+    /**
+     * Return a copy of the class instance.
+     */
+    copy() {
+        var copied = Object.assign(
+            Object.create(
+                Object.getPrototypeOf(this)
+            ), 
+            this
+        );
+    
+        // Add a copy of the instance variables
+        copied.state = copied.state.slice(0);
+    
+        return copied;
+    }
+
 }
 
 /** 

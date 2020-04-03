@@ -6,7 +6,8 @@
  * any of the 4 liberty points surrounding a stone.
  * 
  * GroupTable has methods to create new groups, addEntry(); edit groups, 
- * addToGroup(); and delete groups, removeGroup() in this.table.     
+ * addToGroup(); delete groups, removeGroup() in this.table; and copy 
+ * itself as a class instance, and this.table.     
  */
 
 class GroupTable {
@@ -54,7 +55,6 @@ class GroupTable {
     }
 
     removefromGroup(co) {
-        console.log(co);
         var group = this.getGroupOf(co);
         var coords = this.table[group][0];
         if (coords.length == 1) {

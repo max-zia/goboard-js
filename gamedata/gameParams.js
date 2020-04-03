@@ -8,7 +8,7 @@ class GameParams {
     constructor() {
         this.mainTree = [];
     }
-
+        
     getPlayer() {
         return (this.mainTree.length % 2) == 0 ? "black" : "white";
     }

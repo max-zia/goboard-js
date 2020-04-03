@@ -1,6 +1,7 @@
-// Instantiate board, board view tools, and main group table
+// Instantiate board, board/dash view tools, and main group table
 var board = new Board(9);
 var view = new BoardView();
+var dashview = new DashView();
 var groupTable = new GroupTable();
 
 // Instantiate game parameters, as well as analysis mode data
@@ -14,6 +15,7 @@ view.initDraw(board);
 initBoardControl();
 
 // Add controls/listeners to the UI
-addUndoMoveHandler();
-
+undoMoveHandler();
+forwardMoveHandler();
+returnToGameHandler();
 

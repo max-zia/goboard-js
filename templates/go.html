@@ -2,26 +2,20 @@
 </head>
 
 <body>
-  
-  <!-- Button panel, score etc. -->
-  <div>
-    <!-- Undo button -->
+
+  <!-- Dashboard -->
+  <div class="col-6">
     <button id="back-btn">Go back move</button>
-
-    <!-- Analysis mode on?
-    <span id="analysis-indicator" style="display: none">analysis on</span>
-    <script>
-      if (params.analysisMode == true) {
-        var i = document.getElementById("analysis-indicator");
-        i.style.display = "inline";
-      }
-    </script> -->
+    <button id="forward-btn">Go forward move</button>
+    <button id="return-to-game-btn" style="display: none">Return to game</button>
   </div>
 
+  <!-- SVG Go Board -->
   <div>
-    <!-- SVG Go Board -->
-    <svg id="board" width="600" height="600"></svg>
+    <svg id="board" width="500" height="500"></svg>
   </div>
+
+
 
   <!-- JS -->
   <!-- Helpers -->
@@ -33,13 +27,14 @@
   <!-- Views -->
   <script src="../views/viewSettings.js"></script>
   <script src="../views/viewUtils.js"></script>
+  <script src="../views/dashview.js"></script>
   <script src="../views/boardview.js"></script>
 
   <!-- Game Data & Controls -->
   <script src="../gamedata/gameParams.js"></script>
   <script src="../gamedata/groupTable.js"></script>
   <script src="../gamedata/analysisMode.js"></script>
-  
+
   <script src="../controls/groupDetection.js"></script>
   <script src="../controls/stoneDetection.js"></script>
   <script src="../controls/boardcontrol.js"></script>

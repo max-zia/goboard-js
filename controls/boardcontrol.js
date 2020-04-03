@@ -33,8 +33,17 @@ function addControl(co) {
 }
 
 /**
- * Attach a click listener to a point on the board, which handles clicks as
- * either moves to be stored in main tree, or analysis moves for a secondary tree.  
+ * Handle a board click at a specific point on the board. The click is either
+ * registered as a move to be stored permanently in params.mainTree, or as an
+ * analysis move to be temporarily stored in analysisMode.secondaryTree.
+ * 
+ * On clicks to the real board, this listener (i) updates the board model, 
+ * (ii) updates the group table, (iii) tests any possible captures after last
+ * move, (iv) refreshes board view, and (v) updates params.mainTree.
+ * 
+ * On clicks to the analysis board, the only difference is that, in step (v),
+ * analysisMode.secondaryTree is updated rather than params.mainTree.
+
  */
 function boardClickHandler(svg, co) {
     svg.addEventListener("click", function() {

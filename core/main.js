@@ -15,7 +15,5 @@ view.initDraw(board);
 initBoardControl();
 
 // Add controls/listeners to the UI
-undoMoveHandler();
-forwardMoveHandler();
-returnToGameHandler();
+initDashControl();
 

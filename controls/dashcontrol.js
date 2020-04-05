@@ -1,3 +1,7 @@
+/**
+ * Add handlers for the UI elements of the dashboard, including undo move,
+ * go forward move, and return to game.
+ */
 function initDashControl() {
     undoMoveHandler();
     forwardMoveHandler();
@@ -5,7 +9,7 @@ function initDashControl() {
 }
 
 /**
- * Add an event listener to the back button and the left arrow keypress 
+ * Add an event listener for the back button and the left arrow keypress 
  */
 function undoMoveHandler() {
     
@@ -47,13 +51,9 @@ function undoMoveHandler() {
                     analysisMode.counter--;
                 }
         
-                // delete from group
+                // delete from group, set empty, and refresh view
                 groupTable.removefromGroup(co);
-        
-                // set empty
                 board.setEmpty(co);
-        
-                // refresh view
                 view.refreshPoint(co, board);
             }
 
@@ -61,12 +61,12 @@ function undoMoveHandler() {
 
     });
 
-    // one for keypresses (left arrow)
+    // add event listener for left arrow keypress
 }
 
 
 /**
- * Add an event listener to the forward button and right arrow keypress
+ * Add an event listener for the forward button and right arrow keypress
  */
 function forwardMoveHandler() {
     // one for clicking on button in GUI
@@ -81,20 +81,7 @@ function forwardMoveHandler() {
                     var colour = (analysisMode.counter % 2) == 0 ? "black" : "white";
                     var oppColour = (colour == "white") ? "black" : "white";
                     var co = params.mainTree[analysisMode.counter];
-
-                    // Update board model
-                    board.playStone(colour, co);
-
-                    // Update group table
-                    updateGroupTable(co);
-            
-                    // Contact with opposite-coloured stones
-                    if (touchesOppColour(oppColour, co)) {
-                        captureCheck(oppColour, co, board);
-                    }
-            
-                    // Update view by refreshing latest move
-                    view.refreshPoint(co, board);
+                    placeMove(board, colour, oppColour, co);
 
                 }
             }
@@ -102,13 +89,12 @@ function forwardMoveHandler() {
 
     });
 
-    // one for keypresses (right arrow)
-    // do something here
+    // add event listener for right arrow keypress
 }
 
 
 /**
- * Add an event listener to the "return to game" button, which resets board and
+ * Add an event listener for the "return to game" button, which resets board and
  * group table to latest state, disables analysis mode, and refreshes view.
  */
 function returnToGameHandler() {

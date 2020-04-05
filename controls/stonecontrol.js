@@ -1,23 +1,3 @@
-/** Count the number of liberties of a particular group */
-function countLiberties(groupId) {
-    liberties = [];
-    var groupCoords = groupTable.table[groupId][0];
-    groupCoords.forEach(function(co) {
-        var libTable = getLibertyTable(co);
-        var libIndices = Object.keys(libTable);
-
-        for (let i = 0; i < 4; i++) {
-            var index = libIndices[i];
-            if (libTable[index] == 0) {
-                if (!(liberties.includes(index))) {
-                    liberties.push(index);
-                }
-            }
-        }
-    });
-    return liberties.length;
-}
-
 /**
  * Return true if the stone just placed is next to a stone of opposite colour. 
  */

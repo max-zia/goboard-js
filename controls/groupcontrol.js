@@ -2,31 +2,6 @@
 // the game's groupTable.  
 
 /**
- * Return a hash table of { board_index : state } corresponding to the 
- * 4 liberties surrounding a single stone in the game of go. 
- */
-function getLibertyTable(co) {
-    var index = getIndex(co); 
-    var liberties = {};
-
-    // The 4 liberties surrounding the point, by index
-    var indices = { 
-        right: index + 1,
-        left: index - 1,
-        up: index - board.size,
-        down: index + board.size
-    }
-
-    // Append the values of the liberties to hash table
-    Object.values(indices).forEach(function(index) {
-        state = board.state[index];
-        liberties[index] = state;
-    });
-
-    return liberties;
-}
-
-/**
  * Analyse 4 liberties for just-played stone and determine how an existing
  * group table should be updated based on liberty state configuration. 
  * e.g. updateGroupTable("B8") 
@@ -36,22 +11,22 @@ function updateGroupTable(co) {
     // Get colour of just-played stone 
     var libTable = getLibertyTable(co);
     var libStates = Object.values(libTable);
-    var stoneColour = board.stoneColour(co);
+    var colour = board.stoneColour(co);
 
     // Case 1: No liberties occupied by a same-coloured stone
     // Stone establishes new group
-    if (countOf(libStates, boardstates[stoneColour]) == 0) {
-        groupTable.addEntry(stoneColour, co);
+    if (countOf(libStates, boardstates[colour]) == 0) {
+        groupTable.addEntry(colour, co);
     
     // Case 2: At least 1 liberty is occupied by a same-coloured stone
     // All touching stones are merged into a single group
-    } else if (countOf(libStates, boardstates[stoneColour]) > 0) {
+    } else if (countOf(libStates, boardstates[colour]) > 0) {
 
         // Get an array holding coordinates of the same-coloured stones
         var indices = Object.keys(libTable);
         var coords = [];
         for (let i = 0; i < indices.length; i++) {
-            if (libStates[i] == boardstates[stoneColour]) {
+            if (libStates[i] == boardstates[colour]) {
                 coords.push(getCoordinate(indices[i]));
             }
         }
@@ -79,7 +54,7 @@ function updateGroupTable(co) {
         }
 
         // Add all coordinates in union to a new, merged group
-        groupTable.addEntry(stoneColour, co);
+        groupTable.addEntry(colour, co);
         var groupId = groupTable.getGroupOf(co);
         groupTable.table[groupId][0] = union;
 

@@ -10,26 +10,24 @@ function initBoardControl() {
 
 /** List of listeners to add to view */
 function addControl(co) {
-    var coordinate = document.getElementById(co); 
-    var x = coordinate.children[0].getAttribute("cx");
-    var y = coordinate.children[0].getAttribute("cy"); 
+    var htmlEl = document.getElementById(co); 
+    var x = htmlEl.children[0].getAttribute("cx");
+    var y = htmlEl.children[0].getAttribute("cy"); 
     
     var g = createSVGElement("g");
     g.setAttribute("id", "control-group");
-    coordinate.appendChild(g);
+    htmlEl.appendChild(g);
 
-    // Append a control/sensor to control-group
+    // Append an SVG shape to control-group
     var r = Math.floor(stoneR / 2);
-    var svgCircle = createSVGCircle(
-        x, y, r, 
-        "transparent", 
-        "transparent", 
-        "listener"
+    var svg = createSVGCircle(
+        x, y, r, "transparent", 
+        "transparent", "listener"
     );
-    g.appendChild(svgCircle);
+    g.appendChild(svg);
 
-    // Initialise listener
-    boardClickHandler(svgCircle, co);
+    // Add listener to SVG shape
+    boardClickHandler(svg, co);
 }
 
 /**
@@ -51,23 +49,10 @@ function boardClickHandler(svg, co) {
         // ANALYSIS MODE OFF - move is stored in params.mainTree
         if (!(analysisMode.isOn)) {
 
-            // Get player colours
+            // Place move on board
             var colour = params.getPlayer();
             var oppColour = (colour == "white") ? "black" : "white";
-
-            // Update board model
-            board.playStone(colour, co);
-
-            // Update group table
-            updateGroupTable(co);
-
-            // Contact with opposite-coloured stones
-            if (touchesOppColour(oppColour, co)) {
-                captureCheck(oppColour, co, board);
-            }
-
-            // Update view by refreshing latest move
-            view.refreshPoint(co, board);
+            placeMove(board, colour, oppColour, co);
 
             // Update mainTree
             params.mainTree.push(co); 
@@ -83,26 +68,12 @@ function boardClickHandler(svg, co) {
                 analysisMode.secondaryLine = [];
             }
 
-            // Get player colours
+            // Place move on board
             var colour = analysisMode.getPlayer();
             var oppColour = (colour == "white") ? "black" : "white";
+            placeMove(board, colour, oppColour, co);
 
-            // Push a move to board, refresh, and secondary line
-            // Update board model
-            board.playStone(colour, co);
-
-            // Update group table
-            updateGroupTable(co);
-
-            // Contact with opposite-coloured stones
-            if (touchesOppColour(oppColour, co)) {
-                captureCheck(oppColour, co, board);
-            }
-
-            // Update view by refreshing latest move
-            view.refreshPoint(co, board);
-
-            // Update mainTree
+            // Update secondaryLine
             analysisMode.secondaryLine.push(co); 
         }
 

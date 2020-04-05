@@ -49,14 +49,16 @@ function boardClickHandler(svg, co) {
         // ANALYSIS MODE OFF - move is stored in params.mainTree
         if (!(analysisMode.isOn)) {
 
-            // Place move on board
+            // Validate move and place on board
             var colour = params.getPlayer();
             var oppColour = (colour == "white") ? "black" : "white";
-            placeMove(board, colour, oppColour, co);
 
-            // Update mainTree
-            params.mainTree.push(co); 
-        
+            if (moveIsValid(params, colour, oppColour, co)) {
+                placeMove(board, colour, oppColour, co);
+                params.mainTree.push(co); 
+            } else {
+                dashview.updateError(params.errorMsg);
+            }
 
         // ANALYSIS MODE ON - move is stored in analysisMode.secondaryLine
         } else {
@@ -68,13 +70,17 @@ function boardClickHandler(svg, co) {
                 analysisMode.secondaryLine = [];
             }
 
-            // Place move on board
+            // Validate move and place on board
             var colour = analysisMode.getPlayer();
             var oppColour = (colour == "white") ? "black" : "white";
-            placeMove(board, colour, oppColour, co);
 
-            // Update secondaryLine
-            analysisMode.secondaryLine.push(co); 
+            if (moveIsValid(params, colour, oppColour, co)) {
+                placeMove(board, colour, oppColour, co);
+                analysisMode.secondaryLine.push(co); 
+            } else {
+                dashview.updateError(params.errorMsg);
+            }
+
         }
 
     });

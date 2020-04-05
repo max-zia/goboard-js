@@ -12,6 +12,24 @@ function placeMove(board, colour, oppColour, co) {
     view.refreshPoint(co, board);
 }
 
+/**
+ * Returns false and updates errorMsg in params if move would lead to suicide or ko. 
+ */
+function moveIsValid(params, colour, oppColour, co) {
+    var libTable = getLibertyTable(co);
+    var libStates = Object.values(libTable);
+    var totalLiberties = libStates.length;
+
+    // Check for suicide
+    if (countOf(libStates, boardstates[oppColour]) == totalLiberties) {
+        params.errorMsg = `Illegal move - ${colour} at ${co} is suicide`; 
+        return false;
+    } else {
+        return true;
+    }
+
+}
+
 /** Count the number of liberties of a particular group */
 function countLiberties(groupId) {
     liberties = [];

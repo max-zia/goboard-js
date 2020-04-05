@@ -27,7 +27,8 @@ class BoardView {
     }
     
     /* 
-     * Check an item in board.state and write to SVG tree (e.g. refreshPoint("A9", Board)).  
+     * Check an item in board.state and write to SVG tree 
+     * (e.g. refreshPoint("A9", Board)).  
      */
     refreshPoint(co, board) {
         // check board.state for colour and location

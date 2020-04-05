@@ -1,12 +1,13 @@
 // Manages storage/manipulation of game parameters
 // Parameters include: 
-//      scores for each player
-//      sequences of previous moves, trees, move histories etc.
+//      main tree of moves
+//      error message (stores messages for invalid moves)
 //
 class GameParams {
 
     constructor() {
         this.mainTree = [];
+        this.errorMsg = ''; 
     }
         
     getPlayer() {

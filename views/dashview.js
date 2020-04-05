@@ -3,6 +3,7 @@ class DashView {
     constructor() {
         this.backBtn = document.getElementById("back-btn");
         this.returnToGameBtn = document.getElementById("return-to-game-btn");
+        this.errorBox = document.getElementById("error-box");
     }
 
     enableAnalysisMode() {
@@ -11,6 +12,10 @@ class DashView {
 
     disableAnalysisMode() {
         this.returnToGameBtn.style.display = "none";
+    }
+
+    updateError(msg) {
+        this.errorBox.innerHTML = msg; 
     }
 
 }

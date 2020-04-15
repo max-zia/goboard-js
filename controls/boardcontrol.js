@@ -45,42 +45,25 @@ function addControl(co) {
  */
 function boardClickHandler(svg, co) {
     svg.addEventListener("click", function() {
-        
-        // ANALYSIS MODE OFF - move is stored in params.mainTree
-        if (!(analysisMode.isOn)) {
 
-            // Validate move and place on board
-            var colour = params.getPlayer();
-            var oppColour = (colour == "white") ? "black" : "white";
+        on = false;
 
-            if (moveIsValid(params, colour, oppColour, co)) {
-                placeMove(board, colour, oppColour, co);
-                params.mainTree.push(co); 
-            } else {
-                dashview.updateError(params.errorMsg);
-            }
-
-        // ANALYSIS MODE ON - move is stored in analysisMode.secondaryLine
-        } else {
-            
-            // Already in a secondary line?
+        if (analysisMode.isOn) {
+            on = true;
             if (!(analysisMode.inSecondaryLine)) {
-                // No? Set flag to true and reset storage arr for secondary line
                 analysisMode.inSecondaryLine = true;
                 analysisMode.secondaryLine = [];
             }
+        }
 
-            // Validate move and place on board
-            var colour = analysisMode.getPlayer();
-            var oppColour = (colour == "white") ? "black" : "white";
+        var colour = (on == false) ? params.getPlayer() : analysisMode.getPlayer();
+        var oppColour = (colour == "white") ? "black" : "white"
 
-            if (moveIsValid(params, colour, oppColour, co)) {
-                placeMove(board, colour, oppColour, co);
-                analysisMode.secondaryLine.push(co); 
-            } else {
-                dashview.updateError(params.errorMsg);
-            }
-
+        if (moveIsValid(params, colour, oppColour, co)) {
+            placeMove(board, colour, oppColour, co);
+            (on == false) ? params.mainTree.push(co) : analysisMode.secondaryLine.push(co); 
+        } else {
+            dashview.updateError(params.errorMsg);
         }
 
     });
